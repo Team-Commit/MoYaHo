@@ -18,8 +18,16 @@ class MainViewController: UIViewController {
         let imageView = UIImageView()
         let bottleCountImage = UIImage(named: "bottleCount")
         imageView.image = bottleCountImage
-        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
         return imageView
+    }()
+    
+    private lazy var myPageButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(myPageButtonTapped), for: .touchUpInside)
+        button.setImage(UIImage(named: "myPageButton"), for: .normal)
+        
+        
+        return button
     }()
     
     private lazy var floatingButton: UIButton = {
@@ -55,31 +63,9 @@ class MainViewController: UIViewController {
         return button
     }()
     
-    private let stopMusicButton: UIButton = {
-        let button = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemPink
-        config.cornerStyle = .capsule
-        config.image = UIImage(systemName: "pencil")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
-        button.configuration = config
-        button.layer.shadowRadius = 10
-        button.layer.shadowOpacity = 0.3
-        button.alpha = 0.0
-        button.addTarget(self, action: #selector(musicOffButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var myPageButton: UIButton = {
-        let button = UIButton()
-//        button.setImage(UIImage(named: "myPageButton"), for: .normal)
-        return button
-    }()
-    
-    
     private lazy var mainBottleButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "mainBottle"), for: .normal)
-//        button.addTarget(self, action: #selector(mainBottleButtonTapped), for: <#T##UIControl.Event#>)
         return button
     }()
     
@@ -103,13 +89,15 @@ extension MainViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVideoBackground()
-        self.soundEffect.playOceanSound()
-        
+        view.bringSubviewToFront(myPageButton)
+
+        soundEffect.playOceanSound()
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupVideoBackground()
         
     }
     
@@ -118,7 +106,7 @@ extension MainViewController {
         videoPlayerLayer?.frame = view.bounds
         floatingButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 8 - 40, width: 60, height: 60)
         writeButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 80 - 8 - 40, width: 60, height: 60)
-        stopMusicButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 160 - 8 - 40, width: 60, height: 60)
+        //        stopMusicButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 160 - 8 - 40, width: 60, height: 60)
     }
 }
 
@@ -130,7 +118,7 @@ extension MainViewController {
     func setupUI() {
         view.addSubview(floatingButton)
         view.addSubview(writeButton)
-        view.addSubview(stopMusicButton)
+        //        view.addSubview(stopMusicButton)
         view.addSubview(myPageButton)
         view.addSubview(bootleCount)
         
@@ -144,12 +132,20 @@ extension MainViewController {
     func setupConstraints() {
         
         myPageButton.snp.makeConstraints { make in
-//            make.top.
+            //            make.top.
         }
         
         bootleCount.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.height.equalTo(80)
             make.top.equalToSuperview().offset(80)
             make.left.equalToSuperview().offset(50)
+        }
+        
+        myPageButton.snp.makeConstraints { make in
+            make.width.equalTo(80)
+            make.height.equalTo(80)
+            make.center.equalToSuperview()
         }
     }
 }
@@ -159,18 +155,6 @@ extension MainViewController {
     
     @objc private func didTapFloatingButton() {
         isActive.toggle()
-//        func testFetchData() {
-//            APIManager.shared.fetchTestData { result in
-//                switch result {
-//                case .success(let data):
-//                    print("Data received:", data)
-//                case .failure(let error):
-//                    print("Error:", error)
-//                }
-//            }
-//        }
-//        testFetchData()
-        
     }
     
     @objc private func writeButtonTapped() {
@@ -178,13 +162,15 @@ extension MainViewController {
         self.navigationController?.pushViewController(sendMessageVC, animated: true)
     }
     
-    @objc private func musicOffButtonTapped() {
-        self.soundEffect.oceanAudioPlayer?.stop()
-    }
-    
     @objc private func mainBottleButtonTapped() {
     }
     
+    
+    @objc private func myPageButtonTapped() {
+        let myPageVC = MyPageViewController()
+        print("myPageButonTapped!")
+        self.navigationController?.pushViewController(myPageVC, animated: true)
+    }
     
     private func showActionButtons() {
         popButtons()
@@ -207,29 +193,6 @@ extension MainViewController {
             }
         }
     }
-    
-//    private func popButtons() {
-//        let buttonAnimations:popButtons [(UIButton, CGFloat)] = [
-//            (writeButton, 1.0),
-//            (stopMusicButton, 1.5)
-//        ]
-//
-//        for (button, delay) in buttonAnimations {
-//            if isActive {
-//                button.layer.transform = CATransform3DMakeScale(0.4, 0.4, 1)
-//                UIView.animate(withDuration: 0.3, delay: delay * 0.2, usingSpringWithDamping: 0.55, initialSpringVelocity: 0.3, options: [.curveEaseInOut], animations: {
-//                    button.layer.transform = CATransform3DIdentity
-//                    button.alpha = 1.0
-//                })
-//            } else {
-//                UIView.animate(withDuration: 0.15, delay: delay * 0.2, options: []) {
-//                    button.layer.transform = CATransform3DMakeScale(0.4, 0.4, 0.1)
-//                    button.alpha = 0.0
-//                }
-//            }
-//        }
-//    }
-    
     
     private func rotateFloatingButton() {
         let animation = CABasicAnimation(keyPath: "transform.rotation.z")
@@ -256,6 +219,7 @@ extension MainViewController {
         videoPlayer = AVPlayer(url: URL(fileURLWithPath: path))
         videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
         videoPlayerLayer?.frame = view.frame
+        //MARK: - 비디오 그래비티 나중에 다시와서 해결하기
         videoPlayerLayer?.videoGravity = .resizeAspectFill
         videoPlayer?.isMuted = true
         videoPlayer?.play()
@@ -274,7 +238,7 @@ extension MainViewController {
 
 //MARK: - Background Music
 extension MainViewController {
-   
+    
     
 }
 

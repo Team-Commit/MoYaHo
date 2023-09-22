@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import SwiftUI
 
 
 //MARK: - Properties
@@ -49,10 +48,10 @@ class SendMessageViewController: UIViewController {
     
     private lazy var sendButton:UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 30
+        button.layer.cornerRadius = 50
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-        button.frame = CGRect(x: 0, y: 0, width: 130, height: 60)
+        button.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
         button.layer.cornerRadius = 30
         button.setTitle("Send", for: .normal)
         button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
@@ -150,9 +149,3 @@ extension SendMessageViewController: UITextViewDelegate {
 
 
 
-//MARK: - Preview
-struct VCPreView:PreviewProvider {
-    static var previews: some View {
-        SendMessageViewController().toPreview().edgesIgnoringSafeArea(.all)
-    }
-}

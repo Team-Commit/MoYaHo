@@ -26,13 +26,8 @@
             return textField
         }()
         
-        private lazy var enrolledButton: UIButton = {
-            let button = UIButton()
-            button.layer.cornerRadius = 30
-            button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-            button.layer.borderWidth = 1  // Assuming you want a border width of 1
-            button.setTitle("그래!", for: .normal)  // Set the button title
-            button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        private lazy var enrolledButton: CustomLoginButton = {
+            let button = CustomLoginButton()
             button.addTarget(self, action: #selector(presentMainVC), for: .touchUpInside)
             return button
         }()
@@ -90,8 +85,8 @@
             enrolledButton.snp.makeConstraints { make in
                 make.bottom.equalToSuperview().offset(-130)
                 make.centerX.equalToSuperview()
-                make.width.equalTo(150)
-                make.height.equalTo(60)
+                make.width.equalTo(180)
+                make.height.equalTo(50)
             }
         }
         

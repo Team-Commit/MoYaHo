@@ -36,11 +36,8 @@ class LoginViewController: UIViewController {
     }()
     
     
-    private lazy var loginButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 20
-        button.setTitle("Login", for: .normal)
+    private lazy var loginButton: CustomButton = {
+        let button = CustomButton(style: .login)
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -74,6 +71,7 @@ extension LoginViewController {
                 
                 var userUUID = APIManager.getUUIDFromKeychain()
                 if userUUID == nil {
+                    
                     userUUID = "aweofiawe-23"
                     APIManager.storeUUIDInKeychain(uuid: userUUID!)
                 }
@@ -93,7 +91,6 @@ extension LoginViewController {
                             self?.showAlert(title: "Error", message: "Failed to fetch token from server.")
                         }
                     }
-             
                 }
             }
         }
