@@ -14,19 +14,32 @@ class SendMessageViewController: UIViewController {
     
     private lazy var messageTextView: UITextView = {
         let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.font = UIFont.systemFont(ofSize: 50)
+        textView.isUserInteractionEnabled = true
+        textView.backgroundColor = .black
+        textView.textColor = .white
+        textView.font = UIFont.systemFont(ofSize: 20)
         textView.autocorrectionType = .no
-        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return textView
     }()
+    
+    private lazy var textCountLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .right
+        return label
+    }()
+    
     
     private lazy var letterView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "home")
         imageView.contentMode = .scaleAspectFill
+        imageView.alpha = 0.5
         return imageView
     }()
+    
+    
     private lazy var subLetterView1: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "home2")
@@ -46,18 +59,19 @@ class SendMessageViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var sendButton:UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 50
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-        button.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        button.layer.cornerRadius = 30
-        button.setTitle("Send", for: .normal)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+    private lazy var sendButton:CustomButton = {
+        let button = CustomButton(style: .sendMessage)
         button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var changeLetterButton:CustomButton = {
+        let button = CustomButton(style: .changeLetter)
+        button.addTarget(self, action: #selector(changeLetter), for: .touchUpInside)
+        return button
+    }()
+    
+    
 }
 
 //MARK: - View Cycle
@@ -68,16 +82,31 @@ extension SendMessageViewController {
         setupUI()
         setupNavButton()
         setupTextView()
+        messageTextView.delegate = self
+        
     }
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func changeLetter() {
+        
+    }
+    
     @objc func sendMessage() {
-        
-        
-        
+        APIManager.shared.sendMessage(content: "Your message content here", accessToken: "Your access token here") { result in
+            switch result {
+            case .success(let isSuccess):
+                if isSuccess {
+                    print("Message sent successfully!")
+                } else {
+                    print("Failed to send message.")
+                }
+            case .failure(let error):
+                print("Error sending message: \(error)")
+            }
+        }
     }
     
     func setupTextView() {
@@ -100,13 +129,12 @@ extension SendMessageViewController {
 
 private extension SendMessageViewController {
     func setupUI() {
-        
         view.backgroundColor = .white
         view.addSubview(letterView)
-        view.addSubview(messageTextView)
         view.addSubview(sendButton)
+        view.addSubview(messageTextView)
+        view.addSubview(textCountLabel)
         messageTextView.delegate = self
-        messageTextView.translatesAutoresizingMaskIntoConstraints = false
         setupConstraints()
         
     }
@@ -117,11 +145,7 @@ private extension SendMessageViewController {
 private extension SendMessageViewController {
     func setupConstraints() {
         letterView.snp.makeConstraints { make in
-            
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalToSuperview().multipliedBy(0.7)
+            make.edges.equalToSuperview()
         }
         
         sendButton.snp.makeConstraints { make in
@@ -130,22 +154,59 @@ private extension SendMessageViewController {
             make.width.equalToSuperview().multipliedBy(0.8)
             make.height.equalTo(50)
         }
+        
+        messageTextView.snp.makeConstraints { make in
+            
+            make.top.equalToSuperview().offset(210)
+            make.bottom.equalToSuperview().offset(-220)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(350)
+            make.height.equalTo(430)
+        }
+        
+        textCountLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(letterView).offset(-10)
+            make.right.equalTo(letterView).offset(-10)
+        }
+        
     }
     
     
 }
-
-
 
 //MARK: - UITextViewDelegate
 extension SendMessageViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        return updatedText.count <= 500
+        
+        let projectedLength = updatedText.count
+        
+        // Update the text count label
+        textCountLabel.text = "\(projectedLength)/200"
+        
+        return projectedLength >= 0 && projectedLength <= 200
     }
+    
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let currentLength = textView.text.count
+        textCountLabel.text = "\(currentLength)/200"
+    }
+    
 }
 
 
+//MARK: - Popup sheet
+extension SendMessageViewController {
+    func popUpsheet() {
+        
+    }
+}
 

@@ -26,8 +26,8 @@
             return textField
         }()
         
-        private lazy var enrolledButton: CustomLoginButton = {
-            let button = CustomLoginButton()
+        private lazy var enrolledButton: CustomButton = {
+            let button = CustomButton(style: .login)
             button.addTarget(self, action: #selector(presentMainVC), for: .touchUpInside)
             return button
         }()
@@ -62,7 +62,6 @@
         
         func setupUI() {
             view.addSubview(backgroundImage)
-//            view.addSubview(questionLabel)
             view.addSubview(textField)
             view.addSubview(enrolledButton)
             constraints()

@@ -1,15 +1,14 @@
 import UIKit
 
 class CustomButton: UIButton {
-
+    
     enum ButtonStyle {
         case login
-        case register
+        case sendMessage
         case profile
-        // Add other styles as needed
+        case changeLetter
     }
     
-    // Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -24,24 +23,29 @@ class CustomButton: UIButton {
         switch style {
         case .login:
             setupLoginButton()
-        case .register:
-            setupRegisterButton()
+        case .sendMessage:
+            sendMessageButton()
         case .profile:
             setupProfileButton()
+        case .changeLetter:
+            setupChangeLetterButton()
         }
     }
     
-    // UI Configuration for different styles
     private func setupLoginButton() {
         self.backgroundColor = .black
         self.layer.cornerRadius = 20
         self.setTitle("Login", for: .normal)
     }
     
-    private func setupRegisterButton() {
-        self.backgroundColor = .blue
-        self.layer.cornerRadius = 10
-        self.setTitle("Register", for: .normal)
+    private func sendMessageButton() {
+        self.layer.cornerRadius = 50
+        self.layer.borderWidth = 2
+        self.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+        self.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        self.layer.cornerRadius = 30
+        self.setTitle("Send", for: .normal)
+        self.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
     }
     
     private func setupProfileButton() {
@@ -50,5 +54,7 @@ class CustomButton: UIButton {
         self.setTitle("Profile", for: .normal)
     }
     
-    // Add more setup functions as needed
+    private func setupChangeLetterButton() {
+        self.setImage(UIImage(named: "changeLetterIcon"), for: .normal)
+    }
 }

@@ -1,105 +1,10 @@
-//import Foundation
-//
-//enum APIEndpoint: String {
-//    case test = "/test"
-//    case testMessage = "/test/message"
-//    case sendMessage = "/send/message"
-//    case requestToken = "/v1/auth/sign-in"
-//}
-//
-//enum RequestMethod: String {
-//    case get = "GET"
-//    case post = "POST"
-//}
-//
-//class APIManager {
-//
-//    static let shared = APIManager()
-//    private let baseURL = "http://158.247.255.105:8000"
-//    private let session = URLSession.shared
-//
-//    private init() {}
-//
-//    //MARK: - Test
-//    func fetchTestData(completion: @escaping (Result<String, Error>) -> Void) {
-//        let endpoint = APIEndpoint.test.rawValue
-//        guard let url = URL(string: baseURL + endpoint) else {
-//            completion(.failure(APIError.invalidURL))
-//            return
-//        }
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = RequestMethod.get.rawValue
-//
-//        let task = session.dataTask(with: request) { data, response, error in
-//
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//
-//            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-//                completion(.failure(APIError.invalidResponse))
-//                return
-//            }
-//
-//            if let message = String(data: data, encoding: .utf8) {
-//                completion(.success(message))
-//            } else {
-//                completion(.failure(APIError.dataDecodingError))
-//            }
-//        }
-//
-//        task.resume()
-//    }
-//
-//    //MARK: - Request Token
-//
-//    func requestTokenWithUUID(uuid: String, completion: @escaping (Result<String, Error>) -> Void) {
-//        let endpoint = APIEndpoint.requestToken.rawValue
-//        guard let url = URL(string: baseURL + endpoint) else {
-//            print("APIError");         completion(.failure(APIError.invalidURL) )
-//            return
-//        }
-//
-//        //상태코드 적어놓기
-//
-//        var request = URLRequest(url: url)
-//        request.httpMethod = RequestMethod.post.rawValue
-//        request.httpBody = "uuid=\(uuid)".data(using: .utf8)
-////        request.setValue(<#T##value: String?##String?#>, forHTTPHeaderField: <#T##String#>)
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if let error = error {
-//                completion(.failure(error))
-//                return
-//            }
-//
-//            guard let response = response as? HTTPURLResponse else { return }
-//            print(":::response\(response.statusCode)")
-//
-//            guard let data = data, let token = String(data: data, encoding: .utf8) else {
-//                completion(.failure(APIError.dataDecodingError))
-//                return
-//            }
-//
-//
-//
-//            completion(.success(token))
-//            print("::::::유저토큰_\(token)")
-//        }
-//        task.resume()
-//    }
-
 
 import Foundation
 
 enum APIEndpoint: String {
     case test = "/test"
     case testMessage = "/test/message"
-    case sendMessage = "/send/message"
+    case sendMessage = "/v1/letters"
     case requestToken = "/v1/auth/sign-in"
 }
 
@@ -119,6 +24,15 @@ struct TokenResponse: Codable {
 struct TokenData: Codable {
     let accessToken: String
 }
+
+struct LetterRequest: Codable {
+    let content: String
+}
+
+struct LetterResponse: Codable {
+    let data: Bool
+}
+
 
 
 
@@ -211,6 +125,55 @@ class APIManager {
         }
         task.resume()
     }
+    
+    //MARK: - Send Message Data
+    func sendMessage(content: String, accessToken: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let endpoint = APIEndpoint.sendMessage.rawValue
+        guard let url = URL(string: baseURL + endpoint) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = RequestMethod.post.rawValue
+        
+        let body = LetterRequest(content: content)
+        do {
+            let encoder = JSONEncoder()
+            request.httpBody = try encoder.encode(body)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        } catch {
+            completion(.failure(APIError.dataEncodingError))
+            return
+        }
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                completion(.failure(APIError.invalidResponse))
+                return
+            }
+            
+            if let jsonData = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let letterResponse = try decoder.decode(LetterResponse.self, from: jsonData)
+                    completion(.success(letterResponse.data))
+                } catch {
+                    completion(.failure(APIError.dataDecodingError))
+                }
+            } else {
+                completion(.failure(APIError.unknownError))
+            }
+        }
+        task.resume()
+    }
+
 
 
     

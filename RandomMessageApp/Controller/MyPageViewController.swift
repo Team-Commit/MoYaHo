@@ -26,26 +26,22 @@ class MyPageViewController: UIViewController {
     
     private lazy var dayCount: UILabel = {
        let label = UILabel()
-        
         return label
     }()
     
     
     private lazy var letterCount: UILabel = {
        let label = UILabel()
-        
         return label
     }()
 
     private lazy var musicOffLabel: UILabel = {
        let label = UILabel()
-        
         return label
     }()
 
     private lazy var notificationLabel: UILabel = {
        let label = UILabel()
-        
         return label
     }()
 
