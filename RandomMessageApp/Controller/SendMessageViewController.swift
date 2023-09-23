@@ -1,9 +1,4 @@
-//
-//  SendMessageView.swift
-//  RandomMessageApp
-//
-//  Created by ㅣ on 2023/09/18.
-//
+
 
 import UIKit
 import SnapKit
@@ -24,7 +19,7 @@ class SendMessageViewController: UIViewController {
     
     private lazy var textCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .right
         return label
@@ -35,10 +30,9 @@ class SendMessageViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "home")
         imageView.contentMode = .scaleAspectFill
-        imageView.alpha = 0.5
+        imageView.alpha = 0.3
         return imageView
     }()
-    
     
     private lazy var subLetterView1: UIImageView = {
         let imageView = UIImageView()
@@ -81,9 +75,7 @@ extension SendMessageViewController {
         super.viewDidLoad()
         setupUI()
         setupNavButton()
-        setupTextView()
         messageTextView.delegate = self
-        
     }
     
     @objc func backButtonTapped() {
@@ -109,10 +101,8 @@ extension SendMessageViewController {
         }
     }
     
-    func setupTextView() {
-        
-        
-    }
+    
+    
 }
 
 
@@ -165,13 +155,10 @@ private extension SendMessageViewController {
         }
         
         textCountLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(letterView).offset(-10)
-            make.right.equalTo(letterView).offset(-10)
+            make.bottom.equalTo(letterView).offset(-50)
+            make.right.equalTo(letterView).offset(-30)
         }
-        
     }
-    
-    
 }
 
 //MARK: - UITextViewDelegate
