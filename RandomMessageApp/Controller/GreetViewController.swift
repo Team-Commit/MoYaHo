@@ -14,13 +14,6 @@
             return imageView
         }()
 
-        
-//        private lazy var questionLabel: UILabel = {
-//            let label = UILabel()
-//            label.text = "너의 별명은 무엇이니"
-//            return label
-//        }()
-        
         private lazy var textField: UITextField = {
             let textField = UITextField()
             return textField
@@ -40,9 +33,9 @@
         
         override func viewDidLoad() {
             super.viewDidLoad()
-            
-
             setupUI()
+            navigationController?.popViewController(animated: true)
+
         }
         
         
@@ -73,13 +66,6 @@
             backgroundImage.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
-            
-//            questionLabel.snp.makeConstraints { make in
-//                make.centerX.equalToSuperview()
-//                make.height.equalTo(80)
-//                make.width.equalTo(300)
-//            }
             
             enrolledButton.snp.makeConstraints { make in
                 make.bottom.equalToSuperview().offset(-130)

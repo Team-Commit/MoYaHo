@@ -51,17 +51,21 @@ class CustomButton: UIButton {
         
         //CornerRadius
         self.layer.cornerRadius = 20
+            
+        //Font
+        self.titleLabel?.font = CustomFont.gamjaFlowerRegular.size(20)
     }
     
     private func setupLoginButton() {
         self.backgroundColor = .black
         self.frame = CGRect(x: 0, y: 0, width: 160, height: 50)
         self.setTitle("Login", for: .normal)
+
     }
     
     private func setupOnBoardingButton() {
         self.layer.backgroundColor = UIColor(red: 0.09, green: 0.714, blue: 0.737, alpha: 1).cgColor
-        self.frame = CGRect(x: 0, y: 0, width: 159, height: 50)
+        self.frame = CGRect(x: 0, y: 0, width: 160, height: 50)
         
     }
     

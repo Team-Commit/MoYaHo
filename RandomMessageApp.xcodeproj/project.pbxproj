@@ -22,6 +22,9 @@
 		08BFA9F62ABD65FF00DDB78A /* File2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BFA9F52ABD65FF00DDB78A /* File2.swift */; };
 		08BFA9F82ABD800B00DDB78A /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BFA9F72ABD800B00DDB78A /* Button.swift */; };
 		08BFA9FA2ABD9BBC00DDB78A /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BFA9F92ABD9BBC00DDB78A /* Label.swift */; };
+		08DBA9462ABEAFC000599E37 /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08DBA9452ABEAFC000599E37 /* GamjaFlower-Regular.ttf */; };
+		08DBA9482ABEB0CC00599E37 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DBA9472ABEB0CC00599E37 /* Font.swift */; };
+		08DBA94C2ABEB2F400599E37 /* NotoSansKR-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08DBA94B2ABEB2F400599E37 /* NotoSansKR-VariableFont_wght.ttf */; };
 		08EB87912ABD4616000EBBFF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 08EB87902ABD4616000EBBFF /* SnapKit */; };
 		08EB87942ABD4697000EBBFF /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 08EB87932ABD4697000EBBFF /* RiveRuntime */; };
 		08EB87982ABD5BF9000EBBFF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB87972ABD5BF9000EBBFF /* File.swift */; };
@@ -51,7 +54,11 @@
 		08BFA9F52ABD65FF00DDB78A /* File2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File2.swift; sourceTree = "<group>"; };
 		08BFA9F72ABD800B00DDB78A /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		08BFA9F92ABD9BBC00DDB78A /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
-		08DBA9442ABDB6B100599E37 /* summer-surf-120252.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "summer-surf-120252.mp3"; sourceTree = "<group>"; };
+		08DBA9452ABEAFC000599E37 /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GamjaFlower-Regular.ttf"; path = "../../../../Downloads/Gamja_Flower/GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
+		08DBA9472ABEB0CC00599E37 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		08DBA94B2ABEB2F400599E37 /* NotoSansKR-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		08DBA94D2ABEB9E500599E37 /* summer-surf-120252.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "summer-surf-120252.mp3"; sourceTree = "<group>"; };
+		08DBA94E2ABEC7EF00599E37 /* .HiMelody-Regular.ttf.icloud */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ".HiMelody-Regular.ttf.icloud"; sourceTree = "<group>"; };
 		08EB87952ABD46FC000EBBFF /* RandomMessageApp.xcodeproj */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = RandomMessageApp.xcodeproj; path = RandomMessageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08EB87972ABD5BF9000EBBFF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		08F15C6B2ABBF81B00BC335F /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
@@ -116,6 +123,7 @@
 				08F15C732ABC025500BC335F /* VideoPlayer.swift */,
 				08BFA9F72ABD800B00DDB78A /* Button.swift */,
 				08BFA9F92ABD9BBC00DDB78A /* Label.swift */,
+				08DBA9472ABEB0CC00599E37 /* Font.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -149,9 +157,12 @@
 			children = (
 				086F24732AB7744F006E10FB /* login.riv */,
 				087B2B532ABB05B800C5BA01 /* mainBackground.mp4 */,
-				08DBA9442ABDB6B100599E37 /* summer-surf-120252.mp3 */,
+				08DBA94D2ABEB9E500599E37 /* summer-surf-120252.mp3 */,
 				089328BE2ABC46E100142223 /* wind.mp3 */,
 				08F15C6D2ABBFB3F00BC335F /* crash.mp3 */,
+				08DBA9452ABEAFC000599E37 /* GamjaFlower-Regular.ttf */,
+				08DBA94E2ABEC7EF00599E37 /* .HiMelody-Regular.ttf.icloud */,
+				08DBA94B2ABEB2F400599E37 /* NotoSansKR-VariableFont_wght.ttf */,
 			);
 			name = AssetsFolder;
 			path = RandomMessageApp/AssetsFolder;
@@ -224,8 +235,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				086F245F2AB742DF006E10FB /* Assets.xcassets in Resources */,
+				08DBA94C2ABEB2F400599E37 /* NotoSansKR-VariableFont_wght.ttf in Resources */,
 				086F24742AB7744F006E10FB /* login.riv in Resources */,
 				089328BF2ABC46E100142223 /* wind.mp3 in Resources */,
+				08DBA9462ABEAFC000599E37 /* GamjaFlower-Regular.ttf in Resources */,
 				08F15C6E2ABBFB3F00BC335F /* crash.mp3 in Resources */,
 				087B2B542ABB05B800C5BA01 /* mainBackground.mp4 in Resources */,
 			);
@@ -242,6 +255,7 @@
 				08F15C762ABC09A600BC335F /* LaunchScreenViewController.swift in Sources */,
 				086F245A2AB742DE006E10FB /* LoginViewController.swift in Sources */,
 				086F246A2AB743EF006E10FB /* MainViewController.swift in Sources */,
+				08DBA9482ABEB0CC00599E37 /* Font.swift in Sources */,
 				083FC23F2AB95D650004E86F /* APIManager.swift in Sources */,
 				086F24562AB742DE006E10FB /* AppDelegate.swift in Sources */,
 				086F24582AB742DE006E10FB /* SceneDelegate.swift in Sources */,
