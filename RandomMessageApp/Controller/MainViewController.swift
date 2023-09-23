@@ -11,6 +11,11 @@ class MainViewController: UIViewController {
     var videoPlayerLayer: AVPlayerLayer?
     
     private let soundEffect = SoundEffect()
+    
+    private lazy var topLabel: CustomLabel = {
+        let label = CustomLabel(style: .mainPageLabel)
+        return label
+    }()
 
     private lazy var bootleCount: UIImageView = {
         let imageView = UIImageView()
@@ -57,6 +62,7 @@ extension MainViewController {
         view.addSubview(myPageButton)
         view.addSubview(bootleCount)
         view.addSubview(mainBottleButton)
+        view.addSubview(topLabel)
         setupConstraints()
     }
     
@@ -84,6 +90,11 @@ extension MainViewController {
         mainBottleButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
+        }
+        
+        topLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(30)
         }
         
     }

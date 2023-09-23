@@ -7,6 +7,7 @@ class CustomLabel: UILabel {
         case myPageCount
         case myPageCountRightLabel
         case myPageMenuLabel
+        case mainPageLabel
     }
     
     override init(frame: CGRect) {
@@ -29,6 +30,8 @@ class CustomLabel: UILabel {
             setupMyPageCountRightLabel()
         case .myPageMenuLabel:
             setupMyPageMenuLabel()
+        case .mainPageLabel:
+            setupMainPageLabel()
         }
     }
     
@@ -45,5 +48,12 @@ class CustomLabel: UILabel {
     
     
     private func setupMyPageMenuLabel() {
+    }
+    
+    private func setupMainPageLabel() {
+        self.text = "무야호!"
+        self.textColor = .black
+        self.font = UIFont.boldSystemFont(ofSize: 20)
+        self.font = CustomFont.gamjaFlowerRegular.size(20)
     }
 }
